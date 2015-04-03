@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using StrongerTypes.NonNullable;
 using System.Runtime.Serialization;
+using AutoRss.SyndicationFeedFormatter;
 
-namespace Models
+namespace AutoRss.Models
 {
     [DataContract]
-    public class SyndicationItem
+    public class SyndicationItem : ISyndicationItem
     {
         [DataMember]
         public NonNullable<string> Name { get; private set; }

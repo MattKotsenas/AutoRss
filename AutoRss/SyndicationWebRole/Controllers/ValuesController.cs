@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace SyndicationWebRole.Controllers
+namespace AutoRss.SyndicationWebRole.Controllers
 {
     public class ValuesController : ApiController
     {
