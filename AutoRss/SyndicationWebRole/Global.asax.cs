@@ -17,6 +17,8 @@ namespace AutoRss.SyndicationWebRole
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            GlobalConfiguration.Configuration.Formatters.Insert(0, new SyndicationFeedFormatter.SyndicationFeedFormatter("text/html", "AutoRss", "AutoRss media"));
         }
     }
 }
