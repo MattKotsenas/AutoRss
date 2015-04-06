@@ -7,8 +7,8 @@ namespace AutoRss.SyndicationFeedFormatter
     {
         private const string MediaType = "application/atom+xml";
 
-        public AtomSyndicationFeedFormatter(string title, string description, string formattingQueryParam = "formatter")
-            : base(title, description, MediaType, "atom", formattingQueryParam)
+        public AtomSyndicationFeedFormatter(ISyndicationFeedMapper mapper, string formattingQueryParam = "formatter")
+            : base(mapper, MediaType, "atom", formattingQueryParam)
         {
         }
 

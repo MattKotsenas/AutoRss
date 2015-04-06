@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
-using StrongerTypes.NonNullable;
 
 namespace AutoRss.Models
 {
@@ -15,16 +14,14 @@ namespace AutoRss.Models
             return new[] {
                 new MediaItem(
                     1,
-                    new NonNullable<string>("Name1"),
-                    new NonNullable<Uri>(new Uri("http://detailsLink1")),
-                    new NonNullable<Uri>(new Uri("http://downloadLink1")),
+                    "Name1",
+                    new Uri("http://downloadLink1"),
                     DateTime.Now
                 ),
                 new MediaItem(
                     2,
-                    new NonNullable<string>("Name2"),
-                    new NonNullable<Uri>(new Uri("http://detailsLink2")),
-                    new NonNullable<Uri>(new Uri("http://downloadLink2")),
+                    "Name2",
+                    new Uri("http://downloadLink2"),
                     DateTime.Now
                 )
             };

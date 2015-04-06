@@ -1,11 +1,13 @@
 # AutoRss
 
 ## Using the SyndicationFeedFormatter
+1. Create an instance of ```ISyndicationFeedMapper``` to map from your domain types to ```SyndicationItem```
 1. Add this code to your ```Global.asax```
 
         ```csharp
-        GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter.RssSyndicationFeedFormatter("Feed Title", "Feed Description"));
-        GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter.AtomSyndicationFeedFormatter("Feed Title", "Feed Description"));
+        var mapper = new MyDomainObjectToSyndicationItemMapper();
+        GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter.RssSyndicationFeedFormatter(mapper));
+        GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter.AtomSyndicationFeedFormatter(mapper));
         ```
 
 1. Call your API; you can specify RSS / Atom either via the Accept header, or by appending ```formatter=rss``` to your query string

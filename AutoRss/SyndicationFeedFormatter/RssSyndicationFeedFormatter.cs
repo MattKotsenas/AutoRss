@@ -7,8 +7,8 @@ namespace AutoRss.SyndicationFeedFormatter
     {
         private const string MediaType = "application/rss+xml";
 
-        public RssSyndicationFeedFormatter(string title, string description, string formattingQueryParam = "formatter")
-            : base(title, description, MediaType, "rss", formattingQueryParam)
+        public RssSyndicationFeedFormatter(ISyndicationFeedMapper mapper, string formattingQueryParam = "formatter")
+            : base(mapper, MediaType, "rss", formattingQueryParam)
         {
         }
 

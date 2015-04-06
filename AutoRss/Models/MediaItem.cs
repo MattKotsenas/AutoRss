@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using StrongerTypes.NonNullable;
-using AutoRss.SyndicationFeedFormatter;
 
 namespace AutoRss.Models
 {
-    public class MediaItem : SyndicationItemBase
+    public class MediaItem
     {
         public int Id { get; private set; }
+        public string Name { get; private set; }
+        public Uri DownloadLink { get; private set; }
+        public DateTime Created { get; private set; }
 
-        public MediaItem(int id, NonNullable<string> name, NonNullable<Uri> detailsLink, NonNullable<Uri> downloadLink, DateTime created)
+
+        public MediaItem(int id, string name, Uri downloadLink, DateTime created)
         {
             Id = id;
             Name = name;
-            DetailsLink = detailsLink;
             DownloadLink = downloadLink;
             Created = created;
         }

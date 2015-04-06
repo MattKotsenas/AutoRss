@@ -62,11 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AtomSyndicationFeedFormatter.cs" />
-    <Compile Include="ISyndicationItem.cs" />
+    <Compile Include="ISyndicationFeedMapper.cs" />
     <Compile Include="RssSyndicationFeedFormatter.cs" />
     <Compile Include="SyndicationFeedFormatterBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SyndicationItemBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
