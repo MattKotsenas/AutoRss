@@ -14,20 +14,8 @@ namespace AutoRss.SyndicationWebRole.Controllers
     {
         public IEnumerable<ISyndicationItem> Get()
         {
-            return new[] {
-                new MediaItem(
-                    new NonNullable<string>("Name1"),
-                    new NonNullable<Uri>(new Uri("http://detailsLink1")),
-                    new NonNullable<Uri>(new Uri("http://downloadLink1")),
-                    DateTime.Now
-                ),
-                new MediaItem(
-                    new NonNullable<string>("Name2"),
-                    new NonNullable<Uri>(new Uri("http://detailsLink2")),
-                    new NonNullable<Uri>(new Uri("http://downloadLink2")),
-                    DateTime.Now
-                )
-            };
+            var repo = new MediaRepository();
+            return repo.GetAll();
         }
     }
 }
