@@ -8,28 +8,27 @@ using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml;
 
 // Based on http://www.strathweb.com/2012/04/rss-atom-mediatypeformatter-for-asp-net-webapi/
 
 namespace AutoRss.SyndicationFeedFormatter
 {
-    public class SyndicationFeedFormatter : MediaTypeFormatter
+    public abstract class SyndicationFeedFormatterBase : MediaTypeFormatter
     {
-        private readonly string _rss = "application/rss+xml";
-        private readonly string _title;
-        private readonly string _description;
+        protected readonly string Title;
+        protected readonly string Description;
 
-        public SyndicationFeedFormatter(string format, string title, string description)
+        protected SyndicationFeedFormatterBase(string title, string description, string supportedMediaType,
+            string mappingName, string formattingQueryParam)
         {
-            _title = title;
-            _description = description;
+            Title = title;
+            Description = description;
 
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue(_rss));
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue(supportedMediaType));
 
-            this.AddUriPathExtensionMapping("rss", new MediaTypeHeaderValue(format));
-            this.AddQueryStringMapping("formatter", "rss", new MediaTypeHeaderValue(format));
+            this.AddUriPathExtensionMapping(mappingName, new MediaTypeHeaderValue(supportedMediaType));
+            this.AddQueryStringMapping(formattingQueryParam, mappingName, new MediaTypeHeaderValue(supportedMediaType));
         }
 
         private bool IsSupportedType(Type type)
@@ -71,23 +70,24 @@ namespace AutoRss.SyndicationFeedFormatter
                 items.Add((ISyndicationItem)models);
             }
 
-            var feed = new SyndicationFeed()
+            var feed = new SyndicationFeed
             {
-                Title = new TextSyndicationContent(_title),
-                Description = new TextSyndicationContent(_description),
-                Items = items.Select(item => BuildSyndicationItem(item))
+                Title = new TextSyndicationContent(Title),
+                Description = new TextSyndicationContent(Description),
+                Items = items.Select(BuildSyndicationItem)
             };
 
-            using (XmlWriter writer = XmlWriter.Create(stream))
+            using (var writer = XmlWriter.Create(stream))
             {
-                Rss20FeedFormatter rssFormatter = new Rss20FeedFormatter(feed, false);
-                rssFormatter.WriteTo(writer);
+                WriteFeed(feed, writer);
             }
         }
 
+        protected abstract void WriteFeed(SyndicationFeed feed, XmlWriter writer);
+
         private SyndicationItem BuildSyndicationItem(ISyndicationItem synItem)
         {
-            var item = new SyndicationItem()
+            var item = new SyndicationItem
             {
                 Title = new TextSyndicationContent(synItem.Name),
                 PublishDate = synItem.Created,
