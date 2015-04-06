@@ -2,8 +2,6 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using AutoRss.Models.Syndication;
-using AutoRss.SyndicationFeedFormatter;
 
 namespace AutoRss.SyndicationWebRole
 {
@@ -11,16 +9,12 @@ namespace AutoRss.SyndicationWebRole
     {
         protected void Application_Start()
         {
+            IoCConfig.RegisterIoC(GlobalConfiguration.Configuration);
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-
-            var mapper = new MediaItemToSyndicationItemMapper("AutoRss", "AutoRss Media");
-
-            GlobalConfiguration.Configuration.Formatters.Add(new RssSyndicationFeedFormatter(mapper));
-            GlobalConfiguration.Configuration.Formatters.Add(new AtomSyndicationFeedFormatter(mapper));
+            FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration);
         }
     }
 }

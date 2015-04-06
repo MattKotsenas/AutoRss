@@ -6,10 +6,16 @@ namespace AutoRss.SyndicationWebRole.Controllers
 {
     public class FeedController : ApiController
     {
+        private readonly IReadOnlyRepository<MediaItem> _repository;
+
+        public FeedController(IReadOnlyRepository<MediaItem> repository)
+        {
+            _repository = repository;
+        }
+
         public IEnumerable<MediaItem> Get()
         {
-            var repo = new MediaRepository();
-            return repo.GetAll();
+            return _repository.GetAll();
         }
     }
 }
