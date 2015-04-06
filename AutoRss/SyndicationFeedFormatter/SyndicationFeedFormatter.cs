@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 
+// Based on http://www.strathweb.com/2012/04/rss-atom-mediatypeformatter-for-asp-net-webapi/
+
 namespace AutoRss.SyndicationFeedFormatter
 {
     public class SyndicationFeedFormatter : MediaTypeFormatter
@@ -32,7 +34,8 @@ namespace AutoRss.SyndicationFeedFormatter
 
         private bool IsSupportedType(Type type)
         {
-            return (type == typeof(ISyndicationItem) || type == typeof(IEnumerable<ISyndicationItem>));
+            return (typeof (ISyndicationItem).IsAssignableFrom(type) ||
+                    typeof (IEnumerable<ISyndicationItem>).IsAssignableFrom(type));
         }
 
         public override bool CanReadType(Type type)
