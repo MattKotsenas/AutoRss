@@ -201,6 +201,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Configuration\Configuration.csproj">
+      <Project>{de52bfdb-9618-4865-8556-8cc5b62b86dd}</Project>
+      <Name>Configuration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{41a3db50-a634-4633-be1a-9fad04b87365}</Project>
       <Name>Models</Name>

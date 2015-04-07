@@ -5,6 +5,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using AutoRss.Models;
+using AutoRss.Models.Mocks;
 using AutoRss.Models.Syndication;
 using AutoRss.SyndicationFeedFormatter;
 
@@ -24,10 +25,16 @@ namespace AutoRss.SyndicationWebRole
 
         private static ContainerBuilder BuildContainer(ContainerBuilder builder)
         {
+            builder.RegisterType<Configuration.Configuration>().As<IConfiguration>().SingleInstance();
+
             builder.Register(ctx => new MediaItemToSyndicationItemMapper("AutoRss", "AutoRss Media"))
                 .As<ISyndicationFeedMapper>().SingleInstance();
 
-            builder.RegisterType<MediaRepository>().As<IReadOnlyRepository<MediaItem>>().SingleInstance();
+            builder.Register(ctx =>
+            {
+                var useMock = ctx.Resolve<IConfiguration>().UseMockMediaRepository;
+                return useMock ? (IReadOnlyRepository<MediaItem>) new MockMediaRepository() : new MediaRepository();
+            }).As<IReadOnlyRepository<MediaItem>>().SingleInstance();
 
             return builder;
         }

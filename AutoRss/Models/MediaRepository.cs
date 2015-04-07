@@ -11,21 +11,7 @@ namespace AutoRss.Models
     {
         public IEnumerable<MediaItem> GetAll()
         {
-            return new[] {
-                new MediaItem(
-                    1,
-                    "Name1",
-                    new Uri("http://downloadLink1"),
-                    DateTime.Now
-                ),
-                new MediaItem(
-                    2,
-                    "Name2",
-                    new Uri("http://downloadLink2"),
-                    DateTime.Now
-                )
-            };
-            //return MediaItems;
+            return MediaItems;
         }
         public MediaItem Get(int id)
         {

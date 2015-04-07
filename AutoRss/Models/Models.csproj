@@ -35,9 +35,11 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IConfiguration.cs" />
     <Compile Include="IReadOnlyRepository.cs" />
     <Compile Include="IReadOnlyRepositoryAsync.cs" />
     <Compile Include="MediaItem.cs" />
+    <Compile Include="Mocks\MockMediaRepository.cs" />
     <Compile Include="Syndication\MediaItemToSyndicationItemMapper.cs" />
     <Compile Include="MediaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
