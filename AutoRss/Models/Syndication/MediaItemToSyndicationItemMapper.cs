@@ -26,8 +26,8 @@ namespace AutoRss.Models.Syndication
                 Content = new TextSyndicationContent(item.Name)
             };
 
-            synItem.Links.Add(new SyndicationLink(item.DownloadLink));
-            synItem.AddPermalink(item.DownloadLink);
+            synItem.Links.Add(new SyndicationLink(new Uri(item.DownloadLink)));
+            synItem.AddPermalink(new Uri(item.DownloadLink));
 
             return synItem;
         }

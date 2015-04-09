@@ -12,15 +12,19 @@ namespace AutoRss.Models.Mocks
             new MediaItem(
                 1,
                 "Name1",
-                new Uri("http://downloadLink1"),
-                DateTime.Now
-                ),
+                "http://downloadLink1",
+                DateTime.Now,
+                0,
+                "audio/mpeg"
+            ),
             new MediaItem(
                 2,
                 "Name2",
-                new Uri("http://downloadLink2"),
-                DateTime.Now
-                )
+                "http://downloadLink2",
+                DateTime.Now,
+                0,
+                "audio/mp4"
+            )
         };
 
         public IEnumerable<MediaItem> GetAll()

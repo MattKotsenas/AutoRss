@@ -39,6 +39,11 @@
     <Compile Include="IReadOnlyRepository.cs" />
     <Compile Include="IReadOnlyRepositoryAsync.cs" />
     <Compile Include="MediaItem.cs" />
+    <Compile Include="Migrations\201504071606447_InitialCreate.cs" />
+    <Compile Include="Migrations\201504071606447_InitialCreate.Designer.cs">
+      <DependentUpon>201504071606447_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mocks\MockMediaRepository.cs" />
     <Compile Include="Syndication\MediaItemToSyndicationItemMapper.cs" />
     <Compile Include="MediaRepository.cs" />
@@ -73,6 +78,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201504071606447_InitialCreate.resx">
+      <DependentUpon>201504071606447_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
