@@ -28,6 +28,7 @@ namespace AutoRss.Models.Syndication
 
             synItem.Links.Add(new SyndicationLink(new Uri(item.DownloadLink)));
             synItem.AddPermalink(new Uri(item.DownloadLink));
+            synItem.Links.Add(SyndicationLink.CreateMediaEnclosureLink(new Uri(item.DownloadLink), item.MimeType, item.Size));
 
             return synItem;
         }
