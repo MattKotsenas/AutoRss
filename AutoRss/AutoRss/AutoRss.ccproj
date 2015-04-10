@@ -45,12 +45,22 @@
       <RoleName>SyndicationWebRole</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\YouTubeDownloadWorker\YouTubeDownloadWorker.csproj">
+      <Name>YouTubeDownloadWorker</Name>
+      <Project>{bca5f913-543b-4f94-ab3c-71fb5f0dba93}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>YouTubeDownloadWorker</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SyndicationWebRoleContent\" />
+    <Folder Include="YouTubeDownloadWorkerContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SyndicationWebRoleContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="YouTubeDownloadWorkerContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
