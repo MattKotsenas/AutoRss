@@ -7,12 +7,12 @@ namespace AutoRss.YouTubeDownloadWorker
 {
     public class YouTubeUrlExtractor
     {
-        public string Download(string youtubeLink)
+        public YouTubeItem Download(string url)
         {
             IEnumerable<VideoInfo> videoInfos;
             try
             {
-                videoInfos = DownloadUrlResolver.GetDownloadUrls(youtubeLink);
+                videoInfos = DownloadUrlResolver.GetDownloadUrls(url);
             }
             catch (ArgumentException)
             {
@@ -24,12 +24,16 @@ namespace AutoRss.YouTubeDownloadWorker
                     .OrderByDescending(info => info.Resolution).FirstOrDefault();
 
             if (video == null) return null;
-
             if (video.RequiresDecryption)
             {
                 DownloadUrlResolver.DecryptDownloadUrl(video);
             }
-            return video.DownloadUrl;
+
+            return new YouTubeItem
+            {
+                Name = video.Title,
+                Url = new Uri(video.DownloadUrl)
+            };
         }
     }
 }
