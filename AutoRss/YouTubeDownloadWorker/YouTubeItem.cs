@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace AutoRss.YouTubeDownloadWorker
 {
@@ -10,6 +7,15 @@ namespace AutoRss.YouTubeDownloadWorker
     {
         public string Name { get; set; }
         public Uri Url { get; set; }
+    }
+
+    public class DownloadedItem
+    {
+        public string Name { get; set; }
+        public Uri OriginalUrl { get; set; }
+        public string ContentType { get; set; }
         public long Size { get; set; }
+        public Stream Stream { get; set; }
+        public Uri BlobUrl { get; set; }
     }
 }
