@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace AutoRss.YouTubeExtractionWorker
 {
@@ -7,15 +6,5 @@ namespace AutoRss.YouTubeExtractionWorker
     {
         public string Name { get; set; }
         public Uri Url { get; set; }
-    }
-
-    public class DownloadedItem
-    {
-        public string Name { get; set; }
-        public Uri OriginalUrl { get; set; }
-        public string ContentType { get; set; }
-        public long Size { get; set; }
-        public Stream Stream { get; set; }
-        public Uri BlobUrl { get; set; }
     }
 }

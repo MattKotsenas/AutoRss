@@ -80,11 +80,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlobUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
     <Compile Include="YouTubeItem.cs" />
-    <Compile Include="YouTubeDownloader.cs" />
     <Compile Include="YouTubeUrlExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
