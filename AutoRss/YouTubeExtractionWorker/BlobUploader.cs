@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace AutoRss.YouTubeDownloadWorker
+namespace AutoRss.YouTubeExtractionWorker
 {
     public class BlobUploader
     {

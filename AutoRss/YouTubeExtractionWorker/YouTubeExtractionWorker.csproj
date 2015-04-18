@@ -8,8 +8,8 @@
     <ProjectGuid>{BCA5F913-543B-4F94-AB3C-71FB5F0DBA93}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoRss.YouTubeDownloadWorker</RootNamespace>
-    <AssemblyName>AutoRss.YouTubeDownloadWorker</AssemblyName>
+    <RootNamespace>AutoRss.YouTubeExtractionWorker</RootNamespace>
+    <AssemblyName>AutoRss.YouTubeExtractionWorker</AssemblyName>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RoleType>Worker</RoleType>

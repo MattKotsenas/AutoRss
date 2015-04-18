@@ -1,10 +1,10 @@
-﻿using AutoRss.YouTubeDownloadWorker;
+﻿using AutoRss.YouTubeExtractionWorker;
 using Machine.Specifications;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable UnusedMember.Local
 
-namespace AutoRss.YouTubeDownloadWorerTests
+namespace AutoRss.YouTubeExtractionWorkerTests
 {
     public abstract class YouTubeUrlExtractorTestsContext
     {

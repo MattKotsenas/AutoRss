@@ -12,7 +12,7 @@
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
   </WebRole>
-  <WorkerRole name="YouTubeDownloadWorker" vmsize="ExtraSmall">
+  <WorkerRole name="YouTubeExtractionWorker" vmsize="ExtraSmall">
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
     </ConfigurationSettings>

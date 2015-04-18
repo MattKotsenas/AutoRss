@@ -15,9 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyndicationFeedFormatterTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "Configuration\Configuration.csproj", "{DE52BFDB-9618-4865-8556-8CC5B62B86DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeDownloadWorker", "YouTubeDownloadWorker\YouTubeDownloadWorker.csproj", "{BCA5F913-543B-4F94-AB3C-71FB5F0DBA93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeExtractionWorker", "YouTubeExtractionWorker\YouTubeExtractionWorker.csproj", "{BCA5F913-543B-4F94-AB3C-71FB5F0DBA93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeDownloadWorkerTests", "YouTubeDownloadWorkerTests\YouTubeDownloadWorkerTests.csproj", "{FBA64900-8503-469B-8E69-01AE777CBB8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeExtractionWorkerTests", "YouTubeExtractionWorkerTests\YouTubeExtractionWorkerTests.csproj", "{FBA64900-8503-469B-8E69-01AE777CBB8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

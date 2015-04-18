@@ -6,7 +6,7 @@ using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
-namespace AutoRss.YouTubeDownloadWorker
+namespace AutoRss.YouTubeExtractionWorker
 {
     public class WorkerRole : RoleEntryPoint
     {

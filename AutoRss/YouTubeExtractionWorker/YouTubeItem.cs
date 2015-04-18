@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace AutoRss.YouTubeDownloadWorker
+namespace AutoRss.YouTubeExtractionWorker
 {
     public class YouTubeItem
     {

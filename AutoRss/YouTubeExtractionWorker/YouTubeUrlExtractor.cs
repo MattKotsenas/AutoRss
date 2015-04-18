@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using YoutubeExtractor;
 
-namespace AutoRss.YouTubeDownloadWorker
+namespace AutoRss.YouTubeExtractionWorker
 {
     public class YouTubeUrlExtractor
     {

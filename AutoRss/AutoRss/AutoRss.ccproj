@@ -37,6 +37,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YouTubeExtractionWorker\YouTubeExtractionWorker.csproj">
+      <Name>YouTubeExtractionWorker</Name>
+      <Project>{bca5f913-543b-4f94-ab3c-71fb5f0dba93}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>YouTubeExtractionWorker</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\SyndicationWebRole\SyndicationWebRole.csproj">
       <Name>SyndicationWebRole</Name>
       <Project>{eae1302c-da3f-4cfd-b6c0-46506632dae2}</Project>
@@ -45,22 +53,14 @@
       <RoleName>SyndicationWebRole</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-    <ProjectReference Include="..\YouTubeDownloadWorker\YouTubeDownloadWorker.csproj">
-      <Name>YouTubeDownloadWorker</Name>
-      <Project>{bca5f913-543b-4f94-ab3c-71fb5f0dba93}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>YouTubeDownloadWorker</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SyndicationWebRoleContent\" />
-    <Folder Include="YouTubeDownloadWorkerContent\" />
+    <Folder Include="YouTubeExtractionWorkerContent" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SyndicationWebRoleContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="YouTubeDownloadWorkerContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="YouTubeExtractionWorkerContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
