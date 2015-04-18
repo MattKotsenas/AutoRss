@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.ServiceBus;
@@ -11,11 +12,11 @@ namespace AutoRss.YouTubeExtractionWorker
     public class WorkerRole : RoleEntryPoint
     {
         // The name of your queue
-        const string QueueName = "ProcessingQueue";
+        private const string TopicName = "autorss";
+        private const string SubscriptionName = "youtube";
 
-        // QueueClient is thread-safe. Recommended that you cache 
-        // rather than recreating it on every request
-        private QueueClient _client;
+        private SubscriptionClient _consumer;
+        private TopicClient _producer;
         private readonly ManualResetEvent _completedEvent = new ManualResetEvent(false);
 
         public override void Run()
@@ -23,16 +24,27 @@ namespace AutoRss.YouTubeExtractionWorker
             Trace.WriteLine("Starting processing of messages");
 
             // Initiates the message pump and callback is invoked for each message that is received, calling close on the client will stop the pump.
-            _client.OnMessage(receivedMessage =>
+            _consumer.OnMessage(receivedMessage =>
                 {
                     try
                     {
                         // Process the message
                         Trace.WriteLine("Processing Service Bus message: " + receivedMessage.SequenceNumber.ToString());
+                        var extractor = new YouTubeUrlExtractor();
+                        var item = extractor.Download(receivedMessage.Properties["Url"].ToString());
+
+                        var message = new BrokeredMessage();
+                        message.Properties["Action"] = "Write";
+                        message.Properties["Url"] = item.Url;
+                        message.Properties["Name"] = item.Name;
+
+                        _producer.Send(message);
+                        receivedMessage.Complete();
                     }
-                    catch
+                    catch (Exception exception)
                     {
                         // Handle any message processing specific exceptions here
+                        Trace.TraceError("Error processing message {0}", exception);
                     }
                 });
 
@@ -44,23 +56,26 @@ namespace AutoRss.YouTubeExtractionWorker
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // Create the queue if it does not exist already
-            string connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
+            var connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
             var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
-            if (!namespaceManager.QueueExists(QueueName))
+
+            if (!namespaceManager.SubscriptionExists(TopicName, SubscriptionName))
             {
-                namespaceManager.CreateQueue(QueueName);
+                namespaceManager.CreateSubscription(TopicName, SubscriptionName,
+                    new SqlFilter("[Action] = 'Extract' AND [Url] LIKE '%youtube.com%'"));
             }
 
-            // Initialize the connection to Service Bus Queue
-            _client = QueueClient.CreateFromConnectionString(connectionString, QueueName);
+            _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
+            _producer = TopicClient.CreateFromConnectionString(connectionString, TopicName);
+
             return base.OnStart();
         }
 
         public override void OnStop()
         {
             // Close the connection to Service Bus Queue
-            _client.Close();
+            _consumer.Close();
+            _producer.Close();
             _completedEvent.Set();
             base.OnStop();
         }
