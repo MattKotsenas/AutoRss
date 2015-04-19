@@ -37,6 +37,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Cloud.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WriterWorker\WriterWorker.csproj">
+      <Name>WriterWorker</Name>
+      <Project>{591b05b8-709c-4054-a854-11bfaadd62fd}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>WriterWorker</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\YouTubeExtractionWorker\YouTubeExtractionWorker.csproj">
       <Name>YouTubeExtractionWorker</Name>
       <Project>{bca5f913-543b-4f94-ab3c-71fb5f0dba93}</Project>
@@ -56,10 +64,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SyndicationWebRoleContent\" />
+    <Folder Include="WriterWorkerContent\" />
     <Folder Include="YouTubeExtractionWorkerContent" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SyndicationWebRoleContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="WriterWorkerContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="YouTubeExtractionWorkerContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->

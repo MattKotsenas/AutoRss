@@ -7,7 +7,7 @@ using System.Data.Entity;
 
 namespace AutoRss.Models
 {
-    public class MediaRepository : DbContext, IReadOnlyRepository<MediaItem>, IReadOnlyRepositoryAsync<MediaItem>
+    public class MediaRepository : DbContext, IReadOnlyRepository<MediaItem>, IReadOnlyRepositoryAsync<MediaItem>, IWriteRepository<MediaItem>
     {
         public IEnumerable<MediaItem> GetAll()
         {
@@ -28,5 +28,10 @@ namespace AutoRss.Models
         }
 
         public DbSet<MediaItem> MediaItems { get; set; }
+        public void Create(MediaItem item)
+        {
+            MediaItems.Add(item);
+            SaveChanges();
+        }
     }
 }

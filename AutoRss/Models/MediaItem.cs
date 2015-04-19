@@ -4,12 +4,12 @@ namespace AutoRss.Models
 {
     public class MediaItem
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string DownloadLink { get; private set; }
-        public DateTime Created { get; private set; }
-        public long Size { get; private set; }
-        public string MimeType { get; private set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string DownloadLink { get; set; }
+        public DateTime Created { get; set; }
+        public long Size { get; set; }
+        public string MimeType { get; set; }
 
 
         public MediaItem(int id, string name, string downloadLink, DateTime created, long size, string mimeType)
@@ -22,9 +22,7 @@ namespace AutoRss.Models
             MimeType = mimeType;
         }
 
-        // EF's constructor
-        // ReSharper disable once UnusedMember.Local
-        private MediaItem()
+        public MediaItem()
         {
         }
     }
