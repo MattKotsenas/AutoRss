@@ -21,7 +21,7 @@
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
     </ConfigurationSettings>
   </WorkerRole>
-  <WorkerRole name="WriterWorker" vmsize="Small">
+  <WorkerRole name="WriterWorker" vmsize="ExtraSmall">
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
       <Setting name="MediaRepositoryConnectionString" />
