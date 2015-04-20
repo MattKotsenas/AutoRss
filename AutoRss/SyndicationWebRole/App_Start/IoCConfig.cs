@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
@@ -32,8 +33,12 @@ namespace AutoRss.SyndicationWebRole
 
             builder.Register(ctx =>
             {
-                var useMock = ctx.Resolve<IConfiguration>().UseMockMediaRepository;
-                return useMock ? (IReadOnlyRepository<MediaItem>) new MockMediaRepository() : new MediaRepository();
+                var config = ctx.Resolve<IConfiguration>();
+                if (config.UseMockMediaRepository)
+                {
+                    return (IReadOnlyRepository<MediaItem>)new MockMediaRepository();
+                }
+                return new MediaRepository(config.MediaRepositoryConnectionString);
             }).As<IReadOnlyRepository<MediaItem>>().SingleInstance();
 
             return builder;

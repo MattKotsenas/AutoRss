@@ -2,7 +2,10 @@
 <ServiceConfiguration serviceName="AutoRss" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2014-06.2.4">
   <Role name="SyndicationWebRole">
     <Instances count="1" />
-    <ConfigurationSettings />
+    <ConfigurationSettings>
+      <Setting name="MediaRepositoryConnectionString" value="Server=(LocalDB)\v11.0;Database=auto-rss;Integrated Security=True;AttachDBFilename=|DataDirectory|\auto-rss_local.mdf;Initial Catalog=MediaItems" />
+      <Setting name="UseMockMediaRepository" value="true" />
+    </ConfigurationSettings>
   </Role>
   <Role name="YouTubeExtractionWorker">
     <Instances count="1" />
@@ -14,7 +17,8 @@
     <Instances count="1" />
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" value="Endpoint=sb://[your namespace].servicebus.windows.net;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=[your key]" />
-      <Setting name="MediaRepository" value="" />
+      <Setting name="MediaRepositoryConnectionString" value="Server=(LocalDB)\v11.0;Database=auto-rss;Integrated Security=True;AttachDBFilename=|DataDirectory|\auto-rss_local.mdf;Initial Catalog=MediaItems" />
+      <Setting name="UseMockMediaRepository" value="true" />
     </ConfigurationSettings>
   </Role>
 </ServiceConfiguration>

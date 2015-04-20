@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using Autofac;
 using AutoRss.Models;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
@@ -14,6 +15,7 @@ namespace AutoRss.WriterWorker
     {
         private const string TopicName = "autorss";
         private const string SubscriptionName = "writer";
+        private IContainer _dependencyResolver;
         private  SubscriptionClient _consumer;
         readonly ManualResetEvent _completedEvent = new ManualResetEvent(false);
 
@@ -28,15 +30,7 @@ namespace AutoRss.WriterWorker
                     {
                         // Process the message
                         Trace.WriteLine("Processing Service Bus message: " + receivedMessage.SequenceNumber.ToString());
-                        var repo = new MediaRepository();
-                        repo.Create(new MediaItem
-                        {
-                            Created = DateTime.Now,
-                            DownloadLink = receivedMessage.Properties["Url"].ToString(),
-                            MimeType = "video/mp4",
-                            Name = receivedMessage.Properties["Name"].ToString(),
-                            Size = 0
-                        });
+                        _dependencyResolver.Resolve<MediaWriter>().Write(receivedMessage);
                         receivedMessage.Complete();
                     }
                     catch
@@ -62,6 +56,9 @@ namespace AutoRss.WriterWorker
             }
 
             _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
+
+            _dependencyResolver = (new IoCConfig()).BuildContainer();
+
             return base.OnStart();
         }
 

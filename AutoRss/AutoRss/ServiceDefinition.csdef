@@ -11,6 +11,10 @@
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
+    <ConfigurationSettings>
+      <Setting name="MediaRepositoryConnectionString" />
+      <Setting name="UseMockMediaRepository" />
+    </ConfigurationSettings>
   </WebRole>
   <WorkerRole name="YouTubeExtractionWorker" vmsize="ExtraSmall">
     <ConfigurationSettings>
@@ -20,7 +24,8 @@
   <WorkerRole name="WriterWorker" vmsize="Small">
     <ConfigurationSettings>
       <Setting name="Microsoft.ServiceBus.ConnectionString" />
-      <Setting name="MediaRepository" />
+      <Setting name="MediaRepositoryConnectionString" />
+      <Setting name="UseMockMediaRepository" />
     </ConfigurationSettings>
   </WorkerRole>
 </ServiceDefinition>

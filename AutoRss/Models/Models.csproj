@@ -38,6 +38,7 @@
     <Compile Include="IConfiguration.cs" />
     <Compile Include="IReadOnlyRepository.cs" />
     <Compile Include="IReadOnlyRepositoryAsync.cs" />
+    <Compile Include="IReadWriteRepository.cs" />
     <Compile Include="IWriteRepository.cs" />
     <Compile Include="MediaItem.cs" />
     <Compile Include="Migrations\201504071606447_InitialCreate.cs" />

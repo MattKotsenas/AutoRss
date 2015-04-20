@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace AutoRss.Models.Mocks
 {
-    public class MockMediaRepository : IReadOnlyRepository<MediaItem>, IReadOnlyRepositoryAsync<MediaItem>
+    public class MockMediaRepository : IReadWriteRepository<MediaItem>, IReadOnlyRepositoryAsync<MediaItem>
     {
-        private readonly IEnumerable<MediaItem> _items = new[]
+        private readonly IList<MediaItem> _items = new[]
         {
             new MediaItem(
                 1,
@@ -45,6 +45,11 @@ namespace AutoRss.Models.Mocks
         public async Task<MediaItem> GetAsync(int id)
         {
             return await Task.FromResult(Get(id));
+        }
+
+        public void Create(MediaItem item)
+        {
+            _items.Add(item);
         }
     }
 }

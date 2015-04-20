@@ -16,5 +16,15 @@ namespace AutoRss.Configuration
                 return result;
             }
         }
+
+        public string MicrosoftServiceBusConnectionString
+        {
+            get { return CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString"); }
+        }
+
+        public string MediaRepositoryConnectionString
+        {
+            get { return CloudConfigurationManager.GetSetting("MediaRepositoryConnectionString"); }
+        }
     }
 }
