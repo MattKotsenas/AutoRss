@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoRss.Models;
-using Microsoft.ServiceBus.Messaging;
 
 namespace AutoRss.WriterWorker
 {
@@ -13,15 +12,15 @@ namespace AutoRss.WriterWorker
             _repo = repo;
         }
 
-        public void Write(BrokeredMessage message)
+        public void Write(string url, string mimeType, long size, string name)
         {
             _repo.Create(new MediaItem
             {
                 Created = DateTime.Now,
-                DownloadLink = message.Properties["Url"].ToString(),
-                MimeType = "video/mp4",
-                Name = message.Properties["Name"].ToString(),
-                Size = 0
+                DownloadLink = url,
+                MimeType = mimeType,
+                Name = name,
+                Size = size
             });
         }
     }

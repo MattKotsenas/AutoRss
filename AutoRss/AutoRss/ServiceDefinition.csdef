@@ -28,4 +28,10 @@
       <Setting name="UseMockMediaRepository" />
     </ConfigurationSettings>
   </WorkerRole>
+  <WorkerRole name="CloudSaverWorker" vmsize="ExtraSmall">
+    <ConfigurationSettings>
+      <Setting name="Microsoft.ServiceBus.ConnectionString" />
+      <Setting name="CloudSaver.StorageConnectionString" />
+    </ConfigurationSettings>
+  </WorkerRole>
 </ServiceDefinition>

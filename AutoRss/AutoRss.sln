@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriterWorker", "WriterWorker\WriterWorker.csproj", "{591B05B8-709C-4054-A854-11BFAADD62FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudSaverWorker", "CloudSaverWorker\CloudSaverWorker.csproj", "{B2681B17-478B-46BC-A379-289555D48B26}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{591B05B8-709C-4054-A854-11BFAADD62FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{591B05B8-709C-4054-A854-11BFAADD62FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{591B05B8-709C-4054-A854-11BFAADD62FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2681B17-478B-46BC-A379-289555D48B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2681B17-478B-46BC-A379-289555D48B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2681B17-478B-46BC-A379-289555D48B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2681B17-478B-46BC-A379-289555D48B26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

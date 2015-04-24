@@ -6,18 +6,19 @@ using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Microsoft.WindowsAzure.Storage;
 
-namespace AutoRss.YouTubeExtractionWorker
+namespace AutoRss.CloudSaverWorker
 {
     public class WorkerRole : RoleEntryPoint
     {
-        // The name of your queue
         private const string TopicName = "autorss";
-        private const string SubscriptionName = "youtube";
+        private const string SubscriptionName = "cloudsave";
 
         private SubscriptionClient _consumer;
         private TopicClient _producer;
         private readonly ManualResetEvent _completedEvent = new ManualResetEvent(false);
+        private CloudSaver _saver;
 
         public override void Run()
         {
@@ -30,21 +31,22 @@ namespace AutoRss.YouTubeExtractionWorker
                     {
                         // Process the message
                         Trace.WriteLine("Processing Service Bus message: " + receivedMessage.SequenceNumber.ToString());
-                        var extractor = new YouTubeUrlExtractor();
-                        var item = extractor.Download(receivedMessage.Properties["Url"].ToString());
+                        var uri = new Uri(receivedMessage.Properties["Url"].ToString());
+                        var name = receivedMessage.Properties["Name"].ToString();
 
+                        var result = _saver.Save(uri, name);
                         var message = new BrokeredMessage();
-                        message.Properties["Action"] = "CloudSave";
-                        message.Properties["Url"] = item.Url;
-                        message.Properties["Name"] = item.Name;
-
+                        message.Properties["Name"] = name;
+                        message.Properties["Url"] = result.Item1.AbsoluteUri;
+                        message.Properties["MimeType"] = result.Item2;
+                        message.Properties["Size"] = result.Item3;
+                        message.Properties["Action"] = "Write";
                         _producer.Send(message);
                         receivedMessage.Complete();
                     }
-                    catch (Exception exception)
+                    catch
                     {
                         // Handle any message processing specific exceptions here
-                        Trace.TraceError("Error processing message {0}", exception);
                     }
                 });
 
@@ -53,20 +55,28 @@ namespace AutoRss.YouTubeExtractionWorker
 
         public override bool OnStart()
         {
-            // Set the maximum number of concurrent connections 
+            // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            // TODO: Swap all CloudConfigurationManagers with IConfiguration
             var connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
             var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
 
             if (!namespaceManager.SubscriptionExists(TopicName, SubscriptionName))
             {
                 namespaceManager.CreateSubscription(TopicName, SubscriptionName,
-                    new SqlFilter("[Action] = 'Extract' AND [Url] LIKE '%youtube.com%'"));
+                    new SqlFilter("[Action] = 'CloudSave'"));
             }
 
             _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
             _producer = TopicClient.CreateFromConnectionString(connectionString, TopicName);
+
+            var blobConnectionString = CloudConfigurationManager.GetSetting("CloudSaver.StorageConnectionString");
+            var storageAccount = CloudStorageAccount.Parse(blobConnectionString);
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            var blobContainer = blobClient.GetContainerReference("cloudsave");
+
+            _saver = new CloudSaver(blobContainer);
 
             return base.OnStart();
         }
@@ -75,7 +85,6 @@ namespace AutoRss.YouTubeExtractionWorker
         {
             // Close the connection to Service Bus Queue
             _consumer.Close();
-            _producer.Close();
             _completedEvent.Set();
             base.OnStop();
         }

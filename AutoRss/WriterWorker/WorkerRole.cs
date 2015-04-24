@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Autofac;
-using AutoRss.Models;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
@@ -30,7 +28,13 @@ namespace AutoRss.WriterWorker
                     {
                         // Process the message
                         Trace.WriteLine("Processing Service Bus message: " + receivedMessage.SequenceNumber.ToString());
-                        _dependencyResolver.Resolve<MediaWriter>().Write(receivedMessage);
+
+                        var url = receivedMessage.Properties["Url"].ToString();
+                        var mimeType = receivedMessage.Properties["MimeType"].ToString();
+                        var size = long.Parse(receivedMessage.Properties["Size"].ToString());
+                        var name = receivedMessage.Properties["Name"].ToString();
+
+                        _dependencyResolver.Resolve<MediaWriter>().Write(url, mimeType, size, name);
                         receivedMessage.Complete();
                     }
                     catch
