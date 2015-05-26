@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using AutoRss.Configuration;
 using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace AutoRss.YouTubeExtractionWorker
 {

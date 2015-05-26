@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using Autofac;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -10,8 +11,7 @@ namespace AutoRss.YouTubeExtractionWorker
 {
     public class WorkerRole : RoleEntryPoint
     {
-        // The name of your queue
-
+        private ILifetimeScope _container;
         private SubscriptionClient _consumer;
         private TopicClient _producer;
         private readonly ManualResetEvent _completedEvent = new ManualResetEvent(false);
@@ -53,12 +53,9 @@ namespace AutoRss.YouTubeExtractionWorker
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // TODO: Replace with IConfiguration
-            // TODO: Use IoC
-            var connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
-
-            _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
-            _producer = TopicClient.CreateFromConnectionString(connectionString, TopicName);
+            _container = (new IoCConfig()).BuildContainer().BeginLifetimeScope();
+            _consumer = _container.Resolve<SubscriptionClient>();
+            _producer = _container.Resolve<TopicClient>();
 
             return base.OnStart();
         }
