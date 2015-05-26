@@ -1,38 +1,31 @@
-﻿using System;
-using System.Linq;
-using Microsoft.ServiceBus;
-using Microsoft.ServiceBus.Messaging;
+﻿using Microsoft.ServiceBus.Messaging;
 
 namespace AutoRss.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
-            var connectionString = args.FirstOrDefault();
-            var url = args.Skip(1).FirstOrDefault();
+            System.Console.Write("Enter connection string: ");
+            var connectionString = System.Console.ReadLine();
+            System.Console.WriteLine();
 
-            if (String.IsNullOrWhiteSpace(connectionString))
-            {
-                System.Console.Write("Enter connection string: ");
-                connectionString = System.Console.ReadLine();
-                System.Console.WriteLine();
-            }
-
-            if (String.IsNullOrWhiteSpace(url))
-            {
-                System.Console.Write("Enter Url to extract: ");
-                url = System.Console.ReadLine();
-                System.Console.WriteLine();
-            }
-
-            var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
             var producer = TopicClient.CreateFromConnectionString(connectionString, "autorss");
 
-            var message = new BrokeredMessage();
-            message.Properties["Url"] = url;
-            message.Properties["Action"] = "Extract";
-            producer.Send(message);
+            string url;
+            while ((url = GetInput()) != "exit")
+            {
+                var message = new BrokeredMessage();
+                message.Properties["Url"] = url;
+                message.Properties["Action"] = "Extract";
+                producer.Send(message);
+            }
+        }
+
+        private static string GetInput()
+        {
+            System.Console.Write("Enter Url to extract (type 'exit' to quit): ");
+            return System.Console.ReadLine();
         }
     }
 }
