@@ -26,5 +26,10 @@ namespace AutoRss.Configuration
         {
             get { return CloudConfigurationManager.GetSetting("MediaRepositoryConnectionString"); }
         }
+
+        public string CloudSaverStorageConnectionString
+        {
+            get { return CloudConfigurationManager.GetSetting("CloudSaver.StorageConnectionString"); }
+        }
     }
 }

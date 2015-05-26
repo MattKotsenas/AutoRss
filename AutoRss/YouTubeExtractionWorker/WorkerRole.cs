@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
@@ -12,8 +11,6 @@ namespace AutoRss.YouTubeExtractionWorker
     public class WorkerRole : RoleEntryPoint
     {
         // The name of your queue
-        private const string TopicName = "autorss";
-        private const string SubscriptionName = "youtube";
 
         private SubscriptionClient _consumer;
         private TopicClient _producer;
@@ -56,14 +53,9 @@ namespace AutoRss.YouTubeExtractionWorker
             // Set the maximum number of concurrent connections 
             ServicePointManager.DefaultConnectionLimit = 12;
 
+            // TODO: Replace with IConfiguration
+            // TODO: Use IoC
             var connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
-            var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
-
-            if (!namespaceManager.SubscriptionExists(TopicName, SubscriptionName))
-            {
-                namespaceManager.CreateSubscription(TopicName, SubscriptionName,
-                    new SqlFilter("[Action] = 'Extract' AND [Url] LIKE '%youtube.com%'"));
-            }
 
             _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
             _producer = TopicClient.CreateFromConnectionString(connectionString, TopicName);

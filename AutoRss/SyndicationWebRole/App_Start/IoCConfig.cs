@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using AutoRss.Configuration;
 using AutoRss.Models;
 using AutoRss.Models.Mocks;
 using AutoRss.Models.Syndication;

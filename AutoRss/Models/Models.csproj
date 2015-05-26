@@ -35,7 +35,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IConfiguration.cs" />
     <Compile Include="IReadOnlyRepository.cs" />
     <Compile Include="IReadOnlyRepositoryAsync.cs" />
     <Compile Include="IReadWriteRepository.cs" />

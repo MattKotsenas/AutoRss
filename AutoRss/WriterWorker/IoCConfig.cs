@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoRss.Configuration;
 using AutoRss.Models;
 using AutoRss.Models.Mocks;
 

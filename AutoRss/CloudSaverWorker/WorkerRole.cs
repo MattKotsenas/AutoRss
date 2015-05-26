@@ -3,23 +3,19 @@ using System.Diagnostics;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading;
-using Microsoft.ServiceBus;
+using Autofac;
 using Microsoft.ServiceBus.Messaging;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
-using Microsoft.WindowsAzure.Storage;
 
 namespace AutoRss.CloudSaverWorker
 {
     public class WorkerRole : RoleEntryPoint
     {
-        private const string TopicName = "autorss";
-        private const string SubscriptionName = "cloudsave";
-
         private SubscriptionClient _consumer;
         private TopicClient _producer;
         private readonly ManualResetEvent _completedEvent = new ManualResetEvent(false);
         private CloudSaver _saver;
+        private IContainer _dependencyResolver;
 
         public override void Run()
         {
@@ -66,25 +62,11 @@ namespace AutoRss.CloudSaverWorker
             // Set the maximum number of concurrent connections
             ServicePointManager.DefaultConnectionLimit = 12;
 
-            // TODO: Swap all CloudConfigurationManagers with IConfiguration
-            var connectionString = CloudConfigurationManager.GetSetting("Microsoft.ServiceBus.ConnectionString");
-            var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
+            _dependencyResolver = (new IoCConfig()).BuildContainer();
 
-            if (!namespaceManager.SubscriptionExists(TopicName, SubscriptionName))
-            {
-                namespaceManager.CreateSubscription(TopicName, SubscriptionName,
-                    new SqlFilter("[Action] = 'CloudSave'"));
-            }
-
-            _consumer = SubscriptionClient.CreateFromConnectionString(connectionString, TopicName, SubscriptionName);
-            _producer = TopicClient.CreateFromConnectionString(connectionString, TopicName);
-
-            var blobConnectionString = CloudConfigurationManager.GetSetting("CloudSaver.StorageConnectionString");
-            var storageAccount = CloudStorageAccount.Parse(blobConnectionString);
-            var blobClient = storageAccount.CreateCloudBlobClient();
-            var blobContainer = blobClient.GetContainerReference("cloudsave");
-
-            _saver = new CloudSaver(blobContainer);
+            _consumer = _dependencyResolver.Resolve<SubscriptionClient>();
+            _producer = _dependencyResolver.Resolve<TopicClient>();
+            _saver = _dependencyResolver.Resolve<CloudSaver>();
 
             return base.OnStart();
         }
